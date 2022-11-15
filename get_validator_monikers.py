@@ -4,35 +4,18 @@ from sys import exit
 from json import loads
 import csv
 
+from module_variables import api_dict as api_dict
+from module_variables import rpc_dict as rpc_dict
+
+
 ERR_MSG = f"\033[91m[ERR] API endpoint unreachable: api\n" \
           f"[ERR] Be sure you have enabled your API " \
           f"(you can enable this in your app.toml config file)\n" \
           f"Bugreports Discord: Yep++#9963\033[0m"
 
 # default ports
-REST={
-"AXELAR" : "https://axelar-api.polkachu.com",
-"BAND" : "https://rest.cosmos.directory/bandchain",
-"COSMOS HUB" : "https://cosmos-api.polkachu.com",
-"EVMOS" : "https://evmos-api.theamsolutions.info",
-"GRAVITY BRIDGE" : "https://gravitychain.io:1317",
-"JUNO" : "https://juno-api.polkachu.com",
-"KAVA" : "https://api.kava.io",
-"OSMOSIS" : "https://osmosis.stakesystems.io",
-"SECRET" : "https://secret-4.api.trivium.network:1317",
-}
-
-RPC = {
-"AXELAR" : "https://axelar.rpc.stake2.me",
-"BAND" : "http://rpc.laozi1.bandchain.org",
-"COSMOS HUB" : "https://cosmos-rpc.polkachu.com",
-"EVMOS" : "https://evmos-rpc.theamsolutions.info",
-"GRAVITY BRIDGE" : "https://gravitychain.io:26657",
-"JUNO" : "https://juno-rpc.polkachu.com",
-"KAVA" : "https://rpc.kava.io",
-"OSMOSIS" : "https://rpc.osmosis.zone",
-"SECRET" : "https://secret-4.api.trivium.network:26657",
-}
+REST = api_dict
+RPC = rpc_dict
 
 def handle_request(api: str, pattern: str):
     try:
@@ -110,7 +93,7 @@ def colorize_output(validators):
     csv_result = []
 
     result.append("validator_address\tmoniker\tvoting_power\tvoting_power_perc\toperator_address")
-    #csv_result.append(["validator_address","moniker","voting_power","voting_power_perc","operator_address"])
+    csv_result.append(["validator_address","moniker","voting_power","voting_power_perc","operator_address"])
 
     for num, val in enumerate(validators):
         validator_address = val['address']
@@ -155,7 +138,7 @@ def main(chain, STATE):
     #print(calculate_colums(result))
 
     #filename = get_chain_id(chain) + "_monikers.csv"    
-    filename = "monikers.csv"    
+    filename = "result-monikers.csv"    
     with open(filename, 'a') as file:
         writer = csv.writer(file)
         writer.writerows(csv_result)
@@ -163,6 +146,5 @@ def main(chain, STATE):
 if __name__ == '__main__':
 
     for chain, rpc in RPC.items() :
-        if chain in ["BAND"]:
-            STATE = handle_request(rpc, 'dump_consensus_state')
-            main(chain, STATE)
+        STATE = handle_request(rpc, 'dump_consensus_state')
+        main(chain, STATE)

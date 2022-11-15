@@ -3,53 +3,14 @@ import math
 from sys import exit
 from json import loads
 import csv
-
+from module_variables import api_dict as api_dict
 ERR_MSG = f"\033[91m[ERR] API endpoint unreachable: api\n" \
           f"[ERR] Be sure you have enabled your API " \
           f"(you can enable this in your app.toml config file)\n" \
           f"Bugreports Discord: Yep++#9963\033[0m"
 
 # default ports
-APIS = {
-	"Akash" : "https://akash-api.polkachu.com",
-	"AssetMantle" : "https://assetmantle-api.polkachu.com",
-	"Axelar" : "https://axelar-api.polkachu.com",
-	"Band" : "https://rest.cosmos.directory/bandchain",
-	"Bitcanna" : "https://bitcanna-api.polkachu.com",
-	"Bitsong" : "https://rest.cosmos.directory/bitsong",
-	"Cerberus" : "https://cerberus-api.polkachu.com",
-	"Certik" : "https://certik-api.polkachu.com",
-	"Chihuahua" : "https://chihuahua-api.polkachu.com",
-	"Comdex" : "https://comdex-api.polkachu.com",
-	"Cosmos" : "https://cosmos-api.polkachu.com",
-	"Crypto.org" : "https://mainnet.crypto.org:1317",
-	"Desmos" : "https://rest.cosmos.directory/desmos",
-	"Emoney" : "https://rest.cosmos.directory/emoney",
-	"Evmos" : "https://evmos-api.theamsolutions.info",
-	"Fetch.AI" : "https://fetch-api.polkachu.com",
-	"Gravity Bridge" : "https://gravitychain.io:1317",
-	"Injective" : "https://lcd.injective.network",
-	"IRISnet" : "http://35.234.10.84:1317",
-	"Juno" : "https://juno-api.polkachu.com",
-	"Kava" : "https://api.kava.io",
-	"KI Chain" : "https://kichain-api.polkachu.com",
-	"Konstellation" : "https://konstellation-api.polkachu.com",
-	"LUM" : "https://rest.cosmos.directory/lumnetwork",
-	"NYX (NYM)" : "https://nym-api.polkachu.com",
-	"Omniflix" : "https://rest.flixnet.omniflix.network",
-	"Osmosis" : "https://osmosis.stakesystems.io",
-	"Persistence" : "https://rest.cosmos.directory/persistence",
-	"Provenance" : "https://api.provenance.io",
-	"Regen" : "https://rest.cosmos.directory/regen",
-	"Rizon" : "http://seed-1.mainnet.rizon.world:1317",
-	"Secret" : "https://secret-4.api.trivium.network:1317",
-	"Sentinel" : "https://lcd.sentinel.co",
-	"Sifchain" : "https://sifchain-api.polkachu.com",
-	"Stargaze" : "https://stargaze-api.polkachu.com",
-	"Starname" : "https://rest.cosmos.directory/starname",
-	"Terra" : "https://lcd.terra.dev",
-	"Umee" : "https://api.aphrodite.main.network.umee.cc",
-}
+APIS = api_dict
 
 def handle_request(api: str, pattern: str):
     try:
@@ -111,6 +72,7 @@ def write_csv(chain, data, validators):
     csv_full = []
     csv_jail = []
     csv_full.append(["chain","moniker","valcons","start_height","index_offset","jailed_until","tombstoned","missed_blocks_counter"])
+    csv_jail.append(["chain","moniker","valcons","start_height","index_offset","jailed_until","tombstoned","missed_blocks_counter"])
     
     for _, item in enumerate(data["info"]) :
         

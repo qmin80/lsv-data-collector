@@ -1,7 +1,9 @@
-from module_functions import *
-from module_variables import rpc_dict as rpc_dict
+import requests
 import ciso8601
 import time
+
+from module_variables import module_dict as m_dict
+from module_variables import rpc_dict as rpc_dict
 
 def get_adjacent_height(chain, target_time_secs):
 
@@ -57,10 +59,10 @@ def get_adjacent_height(chain, target_time_secs):
 if __name__ == '__main__':
 
     # Get Target Start and End Time
-    ts = ciso8601.parse_datetime("2022-05-24 00:00")
+    ts = ciso8601.parse_datetime("2022-08-23 00:00")
     start_block_time = int(time.mktime(ts.timetuple()))
 
-    ts = ciso8601.parse_datetime("2022-08-23 00:00")
+    ts = ciso8601.parse_datetime("2022-10-23 00:00")
     end_block_time = int(time.mktime(ts.timetuple()))
 
     f_result = open("result-heights.csv", "a")

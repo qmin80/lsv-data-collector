@@ -11,9 +11,11 @@ ERR_MSG = f"\033[91m[ERR] API endpoint unreachable: api\n" \
           f"Bugreports Discord: Yep++#9963\033[0m"
 
 # default ports
-REST = "https://lcd-juno.itastakers.com"
-RPC = "https://rpc-juno.itastakers.com"
+# REST = "https://mainnet.crescent.network:1317"
+# RPC = "https://mainnet.crescent.network:26657"
 
+REST = "http://164.90.154.41:1317"
+RPC = "http://164.90.154.41:26657"
 
 def handle_request(api: str, pattern: str):
     try:
